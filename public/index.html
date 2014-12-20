@@ -12,6 +12,8 @@
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
 
+    <link rel="stylesheet" href="css/overrides.css">
+
     <!-- If the query includes 'print-pdf', include the PDF print sheet -->
     <script>
       if (window.location.search.match(/print-pdf/gi)) {
@@ -68,6 +70,10 @@
         <section>
           <h1>ECMAScript6</h1>
           <h3>Brave New World</h3>
+          <div class="fragment roll-in">
+            <h3>или</h3>
+            <h3>Good, Bad and Ugly</h3>
+          </div>
           <p>
             <small>Автор <a href="mailto:yevhene@gmail.com">Евгений Шемет</a> / <a href="http://twitter.com/yevhene">@yevhene</a></small>
           </p>
@@ -94,7 +100,6 @@
             <h4>Создание</h4>
             <pre><code class="javascript" data-trim>
 var p = new Promise(function(resolve, reject) {
-  // Асинхронное действие
   resolve(result);
   // или
   reject(error);
@@ -179,12 +184,11 @@ var config = Object.assign({}, defaults, options)
 
             <h4>Array</h4>
             <pre><code class="javascript" data-trim>
-// Нормальный конструктор без глупостей
-Array.of(1, 2, 3)
+Array.of(1, 2, 3) // => [1, 2, 3] (Нормальный конструктор без глупостей)
 
-[0, 0, 0].fill(7, 1) // [0,7,7]
+[0, 0, 0].fill(7, 1) // => [0, 7, 7]
 
-[1,2,3].findIndex(function(x) { x == 2 }) // 1
+[1,2,3].findIndex(function(x) { x == 2 }) // => 1
             </code></pre>
 
             <h4>String</h4>
@@ -195,9 +199,9 @@ Array.of(1, 2, 3)
 
             <h4>Math</h4>
             <pre><code class="javascript" data-trim>
-Math.acosh(3) // 1.762747174039086
-Math.hypot(3, 4) // 5
-Math.imul(Math.pow(2, 32) - 1, Math.pow(2, 32) - 2) // 2
+Math.acosh(3) // => 1.762747174039086
+Math.hypot(3, 4) // => 5
+Math.imul(Math.pow(2, 32) - 1, Math.pow(2, 32) - 2) // => 2
             </code></pre>
 
             <h4>...</h4>
@@ -222,8 +226,8 @@ var b = 2;
   var a = 3;
   let b = 4;
 }
-console.log(a); // => 3 Установленное в блоке значение
-console.log(b); // => 2 Установленное перед блоком
+console.log(a); // => 3 (Установленное в блоке значение)
+console.log(b); // => 2 (Установленное перед блоком)
             </code></pre>
 
             <h4>Function Scope</h4>
@@ -272,27 +276,7 @@ for (var prop of user) {
           </section>
 
           <section>
-            <h2>Итераторы</h2>
-
-            <h4>Интерфейс (TypeScript)</h4>
-            <pre><code class="typescript" data-trim>
-interface IteratorResult {
-  done: boolean;
-  value: any;
-}
-
-interface Iterator {
-  next(): IteratorResult;
-}
-
-interface Iterable {
-  __iterator__(): Iterator; // __iterator__ OR Symbol.iterator
-}
-            </code></pre>
-          </section>
-
-          <section>
-            <h2>BIN и OCT литералы</h2>
+            <h2>"BIN" и "OCT" литералы</h2>
 
             <pre><code data-trim>
 0b111110111 === 503 // true
@@ -320,6 +304,45 @@ interface Iterable {
 for(var c of "𠮷") {
   console.log(c);
 }
+            </code></pre>
+          </section>
+        </section>
+
+<!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <section>
+          <section>
+            <h1>Нововведения</h1>
+          </section>
+
+          <section>
+            <h2>Function arguments</h2>
+
+            <h4>Default</h4>
+            <pre><code class="javascript" data-trim>
+function f(x, y=42) {
+  return x + y;
+}
+f(3) == 45
+            </code></pre>
+
+            <h4>Rest</h4>
+            <pre><code class="javascript" data-trim>
+function f(x, ...y) {
+  // y - массив
+  return x * y.length;
+}
+
+f(3, 'second', true) == 6
+            </code></pre>
+
+            <h4>Splat</h4>
+            <pre><code class="javascript" data-trim>
+function f(x, y, z) {
+  return x + y + z;
+}
+
+f(...[1,2,3]) == 6
             </code></pre>
           </section>
 
@@ -356,43 +379,24 @@ var ws = new WeakSet();
 ws.add({ data: 42 }); // Обьект соберется GC, когда он посчитает нужным
             </code></pre>
           </section>
-        </section>
-
-<!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-
-        <section>
-          <section>
-            <h1>TODO</h1>
-          </section>
 
           <section>
-            <h2>Function arguments</h2>
+            <h2>Итераторы</h2>
 
-            <h4>Default</h4>
-            <pre><code class="javascript" data-trim>
-function f(x, y=42) {
-  return x + y;
-}
-f(3) == 45
-            </code></pre>
-
-            <h4>Rest</h4>
-            <pre><code class="javascript" data-trim>
-function f(x, ...y) {
-  // y - массив
-  return x * y.length;
+            <h4>Интерфейс (TypeScript)</h4>
+            <pre><code class="typescript" data-trim>
+interface IteratorResult {
+  done: boolean;
+  value: any;
 }
 
-f(3, 'second', true) == 6
-            </code></pre>
-
-            <h4>Splat</h4>
-            <pre><code class="javascript" data-trim>
-function f(x, y, z) {
-  return x + y + z;
+interface Iterator {
+  next(): IteratorResult;
 }
 
-f(...[1,2,3]) == 6
+interface Iterable {
+  __iterator__(): Iterator; // __iterator__ OR Symbol.iterator
+}
             </code></pre>
           </section>
         </section>
@@ -490,28 +494,31 @@ Admin.withDefaultPermissions = function(name) {
 
         <section>
           <section>
-            <h1>Функциональность</h1>
+            <h1>Функциональный язык</h1>
           </section>
 
           <section>
             <h2>=></h2>
 
             <pre><code class="javascript" data-trim>
+var hello = username =>
+  'hello ' + username;
+            </code></pre>
+
+            <h4>Scope</h4>
+            <pre><code class="javascript" data-trim>
 var user = {
   name: 'Vasya Pupkin',
   knows: ['John Dou'],
   relations: function() {
     this.knows.forEach(k =>
-      console.log(this.name + " knows " + k)
-    ); // Работает
+      console.log(this.name + " knows " + k)); // Работает
 
     this.knows.forEach(function(k) {
-      console.log(this.name + " knows " + k)
-    }); // Не работает
+      console.log(this.name + " knows " + k)}); // Не работает
 
     this.knows.forEach(function(k) {
-      console.log(this.name + " knows " + k)
-    }.bind(this)); // Работает
+      console.log(this.name + " knows " + k)}.bind(this)); // Работает
   }
 }
             </code></pre>
@@ -528,8 +535,8 @@ var [a = 1] = [];  // a === 1
 // Для обектов
 var user = { email: 'user@example.com', address: { city: 'Vinnytsia' } };
 
-var { email: email, address: { city: c } } = user // c === 'Vinnytsia'
-var { email, address } = user // email === 'user@example.com'
+var { email: email, address: { city: c } } = user; // c === 'Vinnytsia'
+var { email, address } = user; // email === 'user@example.com'
 
 // Можно использовать в параметрах функции
 function notify({ email: recipientEmail }) {
@@ -566,7 +573,9 @@ interface Generator extends Iterator {
             <h4>Array</h4>
             <pre><code class="javascript" data-trim>
 [for (i of [1, 2, 3]) if (i &lt;= 2) i * i]; // [1, 4]
+            </code></pre>
 
+            <pre><code class="javascript" data-trim>
 [
   for (x of Array.apply(0, Array(99)).map((x, y) => y + 2))
     if ([
@@ -737,6 +746,14 @@ var loggedObj = new Proxy(obj, {
   }
 });
             </code></pre>
+          </section>
+        </section>
+
+<!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <section>
+          <section>
+            <h1>Спасибо!</h1>
           </section>
         </section>
       </div>
