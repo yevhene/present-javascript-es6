@@ -1,0 +1,746 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>JS Frameworks</title>
+    <meta name="description" content="JavaScript Frameworks for Rich Web Applications">
+    <meta name="author" content="Yevhene Shemet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="lib/css/reveal.min.css">
+    <link rel="stylesheet" href="lib/css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if (window.location.search.match(/print-pdf/gi)) {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'css/print/pdf.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <script src="lib/js/jquery-2.1.1.min.js"></script>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="lib/js/reveal.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+          controls: true,
+          progress: true,
+          history: true,
+          center: true,
+
+          theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+          transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+          // Parallax scrolling
+          // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+          // parallaxBackgroundSize: '2100px 900px',
+
+          // Optional libraries used to extend on reveal.js
+          dependencies: [
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          ]
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>ECMAScript6</h1>
+          <h3>Brave New World</h3>
+          <p>
+            <small>Автор <a href="mailto:yevhene@gmail.com">Евгений Шемет</a> / <a href="http://twitter.com/yevhene">@yevhene</a></small>
+          </p>
+          <p>
+            <small>Github: <a href="http://github.com/yevhene/presentationjs6">yevhene/presentationjs6</a></small>
+          </p>
+          <aside class="notes">
+            <ul>
+              <li>Могут быть ошибки потому что не все примеры работают.</li>
+            </ul>
+          </aside>
+        </section>
+
+<!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <section>
+          <section>
+            <h1>Стандартизация</h1>
+          </section>
+
+          <section>
+            <h2>Promises</h2>
+
+            <h4>Создание</h4>
+            <pre><code class="javascript" data-trim>
+var p = new Promise(function(resolve, reject) {
+  // Асинхронное действие
+  resolve(result);
+  // или
+  reject(error);
+});
+            </code></pre>
+
+            <h4>Цепочка обработчиков</h4>
+            <pre><code class="javascript" data-trim>
+p.then(function(result) {
+  // Обработка результата
+}).then(function(result) {
+  // Следующий обработчик
+}).catch(function(error) {
+  // Обработка ошибки
+});
+            </code></pre>
+
+            <h4>Группировка</h4>
+            <pre><code class="javascript" data-trim>
+var p = Promise.all([promise1, promise2])
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Modules</h2>
+
+            <h4>Експорт</h4>
+            <pre><code class="javascript" data-trim>
+// lib/math.js
+export function sum(x, y) {
+  return x + y;
+}
+export var pi = 3.141593;
+            </code></pre>
+
+            <h4>Импорт</h4>
+            <pre><code class="javascript" data-trim>
+module math from "lib/math";
+alert("2π = " + math.sum(math.pi, math.pi));
+
+import {sum, pi} from "lib/math";
+alert("2π = " + sum(pi, pi));
+            </code></pre>
+
+            <h4>Динамическая загрузка</h4>
+            <pre><code class="javascript" data-trim>
+System.import('lib/math').then(function(m) {
+  alert("2π = " + m.sum(m.pi, m.pi));
+});
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Template Strings</h2>
+
+            <h4>Простой пример</h4>
+            <pre><code class="javascript" data-trim>
+`In JavaScript '\n' is a line-feed.`
+            </code></pre>
+
+            <h4>Многострочная</h4>
+            <pre><code class="javascript" data-trim>
+`In JavaScript this is
+ not legal.`
+            </code></pre>
+
+            <h4>Интерполяция</h4>
+            <pre><code class="javascript" data-trim>
+var name = "Bob", time = "today";
+`Hello ${name}, how are you ${time}?`
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Standard Library</h2>
+
+            <h4>Object</h4>
+            <pre><code class="javascript" data-trim>
+// Теперь jQuery.extend и angular.extend не нужны
+var config = Object.assign({}, defaults, options)
+            </code></pre>
+
+            <h4>Array</h4>
+            <pre><code class="javascript" data-trim>
+// Нормальный конструктор без глупостей
+Array.of(1, 2, 3)
+
+[0, 0, 0].fill(7, 1) // [0,7,7]
+
+[1,2,3].findIndex(function(x) { x == 2 }) // 1
+            </code></pre>
+
+            <h4>String</h4>
+            <pre><code class="javascript" data-trim>
+"abcde".contains("cd") // true
+"abc".repeat(3) // "abcabcabc"
+            </code></pre>
+
+            <h4>Math</h4>
+            <pre><code class="javascript" data-trim>
+Math.acosh(3) // 1.762747174039086
+Math.hypot(3, 4) // 5
+Math.imul(Math.pow(2, 32) - 1, Math.pow(2, 32) - 2) // 2
+            </code></pre>
+
+            <h4>...</h4>
+          </section>
+        </section>
+
+<!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <section>
+          <section>
+            <h1>Работа над ошибками</h1>
+          </section>
+
+          <section>
+            <h2>Scoping</h2>
+
+            <h4>Let</h4>
+            <pre><code class="javascript" data-trim>
+var a = 1;
+var b = 2;
+{
+  var a = 3;
+  let b = 4;
+}
+console.log(a); // => 3 Установленное в блоке значение
+console.log(b); // => 2 Установленное перед блоком
+            </code></pre>
+
+            <h4>Function Scope</h4>
+            <pre><code data-trim>
+{
+  function test1() {
+    console.log('test');
+  }
+  test1(); // Работает
+}
+test1(); // Работает, но не должно
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Const</h2>
+
+            <pre><code class="javascript" data-trim>
+const a = 1;
+a = 2; // => SyntaxError
+            </code></pre>
+
+            <h4>Scope</h4>
+            <pre><code class="javascript" data-trim>
+{
+  const b = 3;
+}
+let b = 4; // => OK
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>For of</h2>
+
+            <h4></h4>
+            <pre><code class="javascript" data-trim>
+var user = { email: "user@example.com" };
+
+Object.prototype.bonus = function() {}
+
+for (var prop of user) {
+  console.log prop;
+}
+// => email
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Итераторы</h2>
+
+            <h4>Интерфейс (TypeScript)</h4>
+            <pre><code class="typescript" data-trim>
+interface IteratorResult {
+  done: boolean;
+  value: any;
+}
+
+interface Iterator {
+  next(): IteratorResult;
+}
+
+interface Iterable {
+  __iterator__(): Iterator; // __iterator__ OR Symbol.iterator
+}
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>BIN и OCT литералы</h2>
+
+            <pre><code data-trim>
+0b111110111 === 503 // true
+0o767 === 503 // true
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Unicode</h2>
+
+            <pre><code data-trim>
+// Длинна сложных символов вычисляется как и раньше
+"𠮷".length == 2
+
+// Опция 'u' для регулярных выражений
+"𠮷".match(/./u)[0] == "𠮷"
+
+// Новая форма литерала
+"\u{20BB7}"=="𠮷"=="\uD842\uDFB7"
+
+// Метод для получения кода символа
+"𠮷".codePointAt(0) == 0x20BB7
+
+// for-of итерирует правильно
+for(var c of "𠮷") {
+  console.log(c);
+}
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Containers</h2>
+
+            <h4>Set</h4>
+            <pre><code class="javascript" data-trim>
+var s = new Set();
+s.add("hello").add("goodbye").add("hello");
+s.size === 2;
+s.has("hello") === true;
+            </code></pre>
+
+            <h4>Map</h4>
+            <pre><code class="javascript" data-trim>
+var m = new Map();
+m.set('1', 42);
+m.get(1) == undefined; // ===
+m.set(s, 34);
+m.get(s) == 34;
+            </code></pre>
+
+            <h4>WeakMap</h4>
+            <pre><code class="javascript" data-trim>
+var wm = new WeakMap(); // Ключ не держится
+wm.set(s, { extra: 42 }); // Вместе с ключами собираются обьекты
+wm.size === undefined // Поэтому мы не знаем точный размер
+            </code></pre>
+
+            <h4>WeakSet</h4>
+            <pre><code class="javascript" data-trim>
+var ws = new WeakSet();
+ws.add({ data: 42 }); // Обьект соберется GC, когда он посчитает нужным
+            </code></pre>
+          </section>
+        </section>
+
+<!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <section>
+          <section>
+            <h1>TODO</h1>
+          </section>
+
+          <section>
+            <h2>Function arguments</h2>
+
+            <h4>Default</h4>
+            <pre><code class="javascript" data-trim>
+function f(x, y=42) {
+  return x + y;
+}
+f(3) == 45
+            </code></pre>
+
+            <h4>Rest</h4>
+            <pre><code class="javascript" data-trim>
+function f(x, ...y) {
+  // y - массив
+  return x * y.length;
+}
+
+f(3, 'second', true) == 6
+            </code></pre>
+
+            <h4>Splat</h4>
+            <pre><code class="javascript" data-trim>
+function f(x, y, z) {
+  return x + y + z;
+}
+
+f(...[1,2,3]) == 6
+            </code></pre>
+          </section>
+        </section>
+
+<!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <section>
+          <section>
+            <h1>Обектная модель</h1>
+          </section>
+
+          <section>
+            <h2>__proto__</h2>
+
+            <pre><code class="javascript" data-trim>
+function User() {}
+User.prototype.greeting = function() {
+  'Good day'
+};
+
+var user = new User();
+user.__proto__ == User.prototype; // => true
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>super</h2>
+
+            <pre><code class="javascript" data-trim>
+function User() {}
+User.prototype.greeting = function() {
+  'Good day'
+};
+
+function Admin() {}
+Admin.prototype = new User();
+Admin.prototype.greeting = function() {
+  super.greeting() + ', Sir'
+};
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Enhanced Object Literals</h2>
+
+            <pre><code class="javascript" data-trim>
+var obj = {
+  __proto__: User.prototype,
+
+  handler, // handler: handler
+
+  toString() { return 'Hello'; }, // Методы
+
+  [ 'prop_' + (() => 42)() ]: 42 // Вычисляемые ключи
+};
+            </code></pre>
+          </section>
+          <section>
+            <h2>Classes</h2>
+
+            <pre><code class="javascript" data-trim>
+class Admin extends User {
+  constructor(name, permissions) {
+    super(name);
+    this.permissions = permissions;
+  }
+  revokeAll() {
+    this.permissions = [];
+  }
+  static withDefaultPermissions(name) {
+    return new Admin(name, ['basic']);
+  }
+}
+            </code></pre>
+
+            <h4>Это раньше было:</h4>
+            <pre><code class="javascript" data-trim>
+function Admin(name, permissions) {
+  super(name);
+  this.permissions = permissions;
+}
+
+Admin.prototype.revokeAll = function() {
+  this.permissions = [];
+};
+
+Admin.withDefaultPermissions = function(name) {
+    return new Admin(name, ['basic']);
+};
+            </code></pre>
+          </section>
+        </section>
+
+<!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <section>
+          <section>
+            <h1>Функциональность</h1>
+          </section>
+
+          <section>
+            <h2>=></h2>
+
+            <pre><code class="javascript" data-trim>
+var user = {
+  name: 'Vasya Pupkin',
+  knows: ['John Dou'],
+  relations: function() {
+    this.knows.forEach(k =>
+      console.log(this.name + " knows " + k)
+    ); // Работает
+
+    this.knows.forEach(function(k) {
+      console.log(this.name + " knows " + k)
+    }); // Не работает
+
+    this.knows.forEach(function(k) {
+      console.log(this.name + " knows " + k)
+    }.bind(this)); // Работает
+  }
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>Destructing</h2>
+
+            <pre><code class="javascript" data-trim>
+// Для массивов
+var [a, , b] = [1,2,3]; // a === 1, b === 3
+var [a] = []; // a === undefined
+var [a = 1] = [];  // a === 1
+
+// Для обектов
+var user = { email: 'user@example.com', address: { city: 'Vinnytsia' } };
+
+var { email: email, address: { city: c } } = user // c === 'Vinnytsia'
+var { email, address } = user // email === 'user@example.com'
+
+// Можно использовать в параметрах функции
+function notify({ email: recipientEmail }) {
+  sendMailTo(recipientEmail);
+}
+notify(user);
+            </code></pre>
+          </section>
+          <section>
+            <h2>Generators</h2>
+
+            <pre><code class="javascript" data-trim>
+var positives = function*() {
+  var cur = 1;
+  while (true) {
+    yield cur++;
+  }
+};
+positives.next().value // => 1
+positives.next().value // => 2
+            </code></pre>
+
+            <h4>Интерфейс (TypeScript)</h4>
+            <pre><code class="typescript" data-trim>
+interface Generator extends Iterator {
+    next(value?: any): IteratorResult;
+    throw(exception: any);
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>Comprehensions</h2>
+
+            <h4>Array</h4>
+            <pre><code class="javascript" data-trim>
+[for (i of [1, 2, 3]) if (i &lt;= 2) i * i]; // [1, 4]
+
+[
+  for (x of Array.apply(0, Array(99)).map((x, y) => y + 2))
+    if ([
+      for (i of Array.apply(0, Array(1 + Math.round(Math.sqrt(x))))
+                     .map((x,y) => y))
+        if ((i > 1) &amp;&amp; ((x % i) === 0))
+          (x % i)
+    ].length === 0)
+  x
+]; // Простые числа меньше 100
+            </code></pre>
+
+            <h4>Generator</h4>
+            <pre><code class="javascript" data-trim>
+(for (i of [1, 2, 3]) if (i &lt;= 2) i * i); // Generator (1, 4)
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Tail Calls</h2>
+
+            <pre><code class="javascript" data-trim>
+function factorial(n, acc = 1) {
+  if (n &lt;= 1) return acc;
+  return factorial(n - 1, n * acc);
+}
+
+factorial(100000); // Стэк не провалится
+            </code></pre>
+          </section>
+        </section>
+
+<!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <section>
+          <section>
+            <h1>Метапрограммирование</h1>
+          </section>
+
+          <section>
+            <h2>Sandboxes</h2>
+
+            <h4>Создание</h4>
+            <pre><code class="javascript" data-trim>
+var loader = new Loader({
+  // configuration object
+  global: { // указываем глобальный обьект вместо window
+    console: {
+      log: function(string) {
+        // console.log теперь будет вызывать alert
+        window.alert(string);
+      }
+    }
+  }
+});
+            </code></pre>
+
+            <h4>Использование</h4>
+            <pre><code class="javascript" data-trim>
+loader.eval("console.log('hello world!');");
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Object.observe</h2>
+
+            <pre><code class="javascript" data-trim>
+var obj = {
+  foo: 0,
+  bar: 1
+};
+
+Object.observe(obj, function(changes) {
+  console.log(changes);
+});
+
+obj.baz = 2;
+// [{name: 'baz', object: &lt;obj&gt;, type: 'add'}]
+
+obj.foo = 'hello';
+// [{name: 'foo', object: &lt;obj&gt;, type: 'update', oldValue: 0}]
+
+delete obj.baz;
+// [{name: 'baz', object: &lt;obj&gt;, type: 'delete', oldValue: 2}]
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Symbols</h2>
+
+            <pre><code class="javascript" data-trim>
+(function() {
+  var key = Symbol('key');
+
+  function MyClass(privateData) {
+    this[key] = privateData;
+  }
+
+  MyClass.prototype = {
+    doStuff: function() {
+      ... this[key] ...
+    }
+  };
+})();
+
+var c = new MyClass('hello')
+c['key'] === undefined
+            </code></pre>
+
+            <pre><code class="javascript" data-trim>
+let positives = {
+  [Symbol.iterator]() {
+    let cur = 1;
+    return {
+      next() {
+        return { done: false, value: cur++ }
+      }
+    }
+  }
+}
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Proxies</h2>
+
+            <h4>Object</h4>
+            <pre><code class="javascript" data-trim>
+var target = {};
+var handler = {
+  get: function (receiver, name) {
+    return `Hello, ${name}!`;
+  }
+};
+
+var p = new Proxy(target, handler); // p.world === 'Hello, world!'
+            </code></pre>
+
+            <h4>Function</h4>
+            <pre><code class="javascript" data-trim>
+var target = function () { return 'I am the target'; };
+var handler = {
+  apply: function (receiver, ...args) {
+    return 'I am the proxy';
+  }
+};
+
+var p = new Proxy(target, handler); // p() === 'I am the proxy'
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Reflect</h2>
+
+            <pre><code class="javascript" data-trim>
+Reflect.apply(f, obj, args)
+            </code></pre>
+
+            <pre><code class="javascript" data-trim>
+var obj = Reflect.construct(User, args)
+            </code></pre>
+
+            <pre><code class="javascript" data-trim>
+var loggedObj = new Proxy(obj, {
+  get: function(target, name, receiver) {
+    console.log('get', target, name, receiver);
+    return Reflect.get(target, name, receiver);
+  }
+});
+            </code></pre>
+          </section>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>
+
