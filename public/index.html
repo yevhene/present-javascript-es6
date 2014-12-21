@@ -174,7 +174,7 @@ System.import('lib/math').then(function(m) {
 
             <h4>Интерполяция</h4>
             <pre><code class="javascript" data-trim>
-var name = "Bob", time = "today";
+var name = 'Bob', time = 'today';
 `Hello ${name}, how are you ${time}?`
             </code></pre>
           </section>
@@ -198,12 +198,12 @@ var b = 2;
   var a = 3;
   let b = 4;
 }
-console.log(a); // => 3 (Установленное в блоке значение)
-console.log(b); // => 2 (Установленное перед блоком)
+a // => 3 (Установленное в блоке значение)
+b // => 2 (Установленное перед блоком)
             </code></pre>
 
             <h4>Function Scope</h4>
-            <pre><code data-trim>
+            <pre><code class="javascript" data-trim>
 {
   function test1() {
     console.log('test');
@@ -224,6 +224,7 @@ test1(); // Работает, но не должно
 
             <pre><code class="javascript" data-trim>
 const a = 1;
+const b; // => SyntaxError
 a = 2; // => SyntaxError
             </code></pre>
 
@@ -278,8 +279,8 @@ Array.of(1, 2, 3) // => [1, 2, 3] (Нормальный конструктор �
 
             <h4>String</h4>
             <pre><code class="javascript" data-trim>
-"abcde".contains("cd") // true
-"abc".repeat(3) // "abcabcabc"
+"abcde".contains("cd") // => true
+"abc".repeat(3) // => "abcabcabc"
             </code></pre>
 
             <h4>Math</h4>
@@ -295,7 +296,7 @@ Math.imul(Math.pow(2, 32) - 1, Math.pow(2, 32) - 2) // => 2
           <section>
             <h2>"BIN" и "OCT" литералы</h2>
 
-            <pre><code data-trim>
+            <pre><code class="javascript" data-trim>
 0b111110111 === 503 // => true
 0o767 === 503 // => true
             </code></pre>
@@ -304,7 +305,7 @@ Math.imul(Math.pow(2, 32) - 1, Math.pow(2, 32) - 2) // => 2
           <section>
             <h2>Unicode</h2>
 
-            <pre><code data-trim>
+            <pre><code class="javascript" data-trim>
 // Длинна сложных символов вычисляется как и раньше
 "𠮷".length == 2
 
@@ -318,7 +319,7 @@ Math.imul(Math.pow(2, 32) - 1, Math.pow(2, 32) - 2) // => 2
 "𠮷".codePointAt(0) == 0x20BB7
 
 // for-of итерирует правильно
-for(var c of "𠮷") {
+for (var c of "𠮷") {
   console.log(c);
 }
             </code></pre>
@@ -385,9 +386,9 @@ m.get(s) // => 34
 
             <h4>WeakMap</h4>
             <pre><code class="javascript" data-trim>
-var wm = new WeakMap(); // Ключ не держится
-wm.set(s, { extra: 42 }); // Вместе с ключами собираются обьекты
-wm.size === undefined // Поэтому мы не знаем точный размер
+var wm = new WeakMap(); // Ключ не удерживается
+wm.set(s, { extra: 42 }); // Вместе с ключами GC собираeт и обьекты
+wm.size === undefined // => true (Поэтому мы не знаем точный размер)
             </code></pre>
 
             <h4>WeakSet</h4>
@@ -469,7 +470,7 @@ Admin.prototype.greeting = function() {
 
             <pre><code class="javascript" data-trim>
 var obj = {
-  __proto__: User.prototype,
+  __proto__: User.prototype, // Указание прототипа прямо в литерале
 
   handler, // handler: handler
 
@@ -498,7 +499,7 @@ class Admin extends User {
 }
             </code></pre>
 
-            <h4>Это раньше было:</h4>
+            <h4>Раньше:</h4>
             <pre><code class="javascript" data-trim>
 function Admin(name, permissions) {
   super(name);
@@ -598,8 +599,8 @@ positives.next().value // => 2
             <h4>Интерфейс (TypeScript)</h4>
             <pre><code class="typescript" data-trim>
 interface Generator extends Iterator {
-    next(value?: any): IteratorResult;
-    throw(exception: any);
+  next(value?: any): IteratorResult;
+  throw(exception: any);
 }
             </code></pre>
           </section>
@@ -795,6 +796,11 @@ var loggedObj = new Proxy(obj, {
             <aside class="notes">
               <ul>
                 <li>Будет активно использоваться в angular 2.0, в первом будут использоваться разве что классы.</li>
+              </ul>
+              <ul class="links">
+                <li><a href="http://kangax.github.io/compat-table/es6/">Compatibility table</a></li>
+                <li><a href="https://github.com/lukehoban/es6features">ECMASCript 6 Features list</a></li>
+                <li><a href="https://leanpub.com/understandinges6/read">ECMASCript 6 Book</a></li>
               </ul>
             </aside>
           </section>
