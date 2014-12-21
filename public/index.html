@@ -92,6 +92,12 @@
         <section>
           <section>
             <h1>Стандартизация</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>Существует множество реализаций этих фич.</li>
+              </ul>
+            </aside>
           </section>
 
           <section>
@@ -172,40 +178,6 @@ var name = "Bob", time = "today";
 `Hello ${name}, how are you ${time}?`
             </code></pre>
           </section>
-
-          <section>
-            <h2>Standard Library</h2>
-
-            <h4>Object</h4>
-            <pre><code class="javascript" data-trim>
-// Теперь jQuery.extend и angular.extend не нужны
-var config = Object.assign({}, defaults, options)
-            </code></pre>
-
-            <h4>Array</h4>
-            <pre><code class="javascript" data-trim>
-Array.of(1, 2, 3) // => [1, 2, 3] (Нормальный конструктор без глупостей)
-
-[0, 0, 0].fill(7, 1) // => [0, 7, 7]
-
-[1,2,3].findIndex(function(x) { x == 2 }) // => 1
-            </code></pre>
-
-            <h4>String</h4>
-            <pre><code class="javascript" data-trim>
-"abcde".contains("cd") // true
-"abc".repeat(3) // "abcabcabc"
-            </code></pre>
-
-            <h4>Math</h4>
-            <pre><code class="javascript" data-trim>
-Math.acosh(3) // => 1.762747174039086
-Math.hypot(3, 4) // => 5
-Math.imul(Math.pow(2, 32) - 1, Math.pow(2, 32) - 2) // => 2
-            </code></pre>
-
-            <h4>...</h4>
-          </section>
         </section>
 
 <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -240,6 +212,11 @@ console.log(b); // => 2 (Установленное перед блоком)
 }
 test1(); // Работает, но не должно
             </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>Function Scope вызывает много споров.</li>
+              </ul>
+            </aside>
           </section>
 
           <section>
@@ -257,6 +234,12 @@ a = 2; // => SyntaxError
 }
 let b = 4; // => OK
             </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>Я никогда не перезаписывал константу.</li>
+              </ul>
+            </aside>
           </section>
 
           <section>
@@ -267,20 +250,54 @@ let b = 4; // => OK
 var user = { email: "user@example.com" };
 
 Object.prototype.bonus = function() {}
+Object.prototype.surprise = function() {}
 
 for (var prop of user) {
   console.log prop;
-}
-// => email
+} // => email
             </code></pre>
+          </section>
+
+          <section>
+            <h2>Standard Library</h2>
+
+            <h4>Object</h4>
+            <pre><code class="javascript" data-trim>
+// Теперь jQuery.extend и angular.extend не нужны
+var config = Object.assign({}, defaults, options)
+            </code></pre>
+
+            <h4>Array</h4>
+            <pre><code class="javascript" data-trim>
+Array.of(1, 2, 3) // => [1, 2, 3] (Нормальный конструктор без глупостей)
+
+[0, 0, 0].fill(7, 1) // => [0, 7, 7]
+
+[1,2,3].findIndex(function(x) { x == 2 }) // => 1
+            </code></pre>
+
+            <h4>String</h4>
+            <pre><code class="javascript" data-trim>
+"abcde".contains("cd") // true
+"abc".repeat(3) // "abcabcabc"
+            </code></pre>
+
+            <h4>Math</h4>
+            <pre><code class="javascript" data-trim>
+Math.acosh(3) // => 1.762747174039086
+Math.hypot(3, 4) // => 5
+Math.imul(Math.pow(2, 32) - 1, Math.pow(2, 32) - 2) // => 2
+            </code></pre>
+
+            <h4>...</h4>
           </section>
 
           <section>
             <h2>"BIN" и "OCT" литералы</h2>
 
             <pre><code data-trim>
-0b111110111 === 503 // true
-0o767 === 503 // true
+0b111110111 === 503 // => true
+0o767 === 503 // => true
             </code></pre>
           </section>
 
@@ -295,7 +312,7 @@ for (var prop of user) {
 "𠮷".match(/./u)[0] == "𠮷"
 
 // Новая форма литерала
-"\u{20BB7}"=="𠮷"=="\uD842\uDFB7"
+"\u{20BB7}" == "𠮷" == "\uD842\uDFB7"
 
 // Метод для получения кода символа
 "𠮷".codePointAt(0) == 0x20BB7
@@ -323,7 +340,7 @@ for(var c of "𠮷") {
 function f(x, y=42) {
   return x + y;
 }
-f(3) == 45
+f(3) // => 45
             </code></pre>
 
             <h4>Rest</h4>
@@ -333,7 +350,7 @@ function f(x, ...y) {
   return x * y.length;
 }
 
-f(3, 'second', true) == 6
+f(3, 'second', true) // => 6
             </code></pre>
 
             <h4>Splat</h4>
@@ -342,7 +359,7 @@ function f(x, y, z) {
   return x + y + z;
 }
 
-f(...[1,2,3]) == 6
+f(...[1,2,3]) // => 6
             </code></pre>
           </section>
 
@@ -353,17 +370,17 @@ f(...[1,2,3]) == 6
             <pre><code class="javascript" data-trim>
 var s = new Set();
 s.add("hello").add("goodbye").add("hello");
-s.size === 2;
-s.has("hello") === true;
+s.size // => 2
+s.has("hello") // => true
             </code></pre>
 
             <h4>Map</h4>
             <pre><code class="javascript" data-trim>
 var m = new Map();
 m.set('1', 42);
-m.get(1) == undefined; // ===
+m.get(1) === undefined; // => true
 m.set(s, 34);
-m.get(s) == 34;
+m.get(s) // => 34
             </code></pre>
 
             <h4>WeakMap</h4>
@@ -378,6 +395,14 @@ wm.size === undefined // Поэтому мы не знаем точный раз
 var ws = new WeakSet();
 ws.add({ data: 42 }); // Обьект соберется GC, когда он посчитает нужным
             </code></pre>
+
+            <aside class="notes">
+              <ul>
+                <li>Я никогда не использовал Set;</li>
+                <li>Я не понимаю зачем второй Map;</li>
+                <li>Зачем Weak версии? Я не собираюсь думать о памяти.</li>
+              </ul>
+            </aside>
           </section>
 
           <section>
@@ -418,7 +443,7 @@ User.prototype.greeting = function() {
 };
 
 var user = new User();
-user.__proto__ == User.prototype; // => true
+user.__proto__ === User.prototype; // => true
             </code></pre>
           </section>
 
@@ -450,10 +475,11 @@ var obj = {
 
   toString() { return 'Hello'; }, // Методы
 
-  [ 'prop_' + (() => 42)() ]: 42 // Вычисляемые ключи
+  [ 'prop_' + currentUserName() + 42 ]: 42 // Вычисляемые ключи
 };
             </code></pre>
           </section>
+
           <section>
             <h2>Classes</h2>
 
@@ -487,6 +513,14 @@ Admin.withDefaultPermissions = function(name) {
     return new Admin(name, ['basic']);
 };
             </code></pre>
+
+
+            <aside class="notes">
+              <ul>
+                <li>Это все обман чтобы заработать классы, чистый сахар;</li>
+                <li>Я не понимаю зачем второй синтаксис для классов.</li>
+              </ul>
+            </aside>
           </section>
         </section>
 
@@ -523,6 +557,7 @@ var user = {
 }
             </code></pre>
           </section>
+
           <section>
             <h2>Destructing</h2>
 
@@ -545,6 +580,7 @@ function notify({ email: recipientEmail }) {
 notify(user);
             </code></pre>
           </section>
+
           <section>
             <h2>Generators</h2>
 
@@ -567,6 +603,7 @@ interface Generator extends Iterator {
 }
             </code></pre>
           </section>
+
           <section>
             <h2>Comprehensions</h2>
 
@@ -754,6 +791,12 @@ var loggedObj = new Proxy(obj, {
         <section>
           <section>
             <h1>Спасибо!</h1>
+
+            <aside class="notes">
+              <ul>
+                <li>Будет активно использоваться в angular 2.0, в первом будут использоваться разве что классы.</li>
+              </ul>
+            </aside>
           </section>
         </section>
       </div>
