@@ -613,6 +613,7 @@ interface Generator extends Iterator {
 [for (i of [1, 2, 3]) if (i &lt;= 2) i * i]; // [1, 4]
             </code></pre>
 
+            <h4>Сложный Array</h4>
             <pre><code class="javascript" data-trim>
 [
   for (x of Array.apply(0, Array(99)).map((x, y) => y + 2))
@@ -723,6 +724,7 @@ var c = new MyClass('hello')
 c['key'] === undefined
             </code></pre>
 
+            <h4>Встроенные</h4>
             <pre><code class="javascript" data-trim>
 let positives = {
   [Symbol.iterator]() {
@@ -768,6 +770,7 @@ var p = new Proxy(target, handler); // p() === 'I am the proxy'
           <section>
             <h2>Reflect</h2>
 
+            <h4>Собрано все рефлексивное API</h4>
             <pre><code class="javascript" data-trim>
 Reflect.apply(f, obj, args)
             </code></pre>
@@ -776,6 +779,7 @@ Reflect.apply(f, obj, args)
 var obj = Reflect.construct(User, args)
             </code></pre>
 
+            <h4>Взаимодействие с Proxy</h4>
             <pre><code class="javascript" data-trim>
 var loggedObj = new Proxy(obj, {
   get: function(target, name, receiver) {
